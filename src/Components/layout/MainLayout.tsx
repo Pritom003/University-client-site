@@ -3,43 +3,39 @@ import {
  
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
+    
+    
   } from '@ant-design/icons';
-import { useState } from "react";
+import {  useState } from "react";
+import { adminSidebarItems } from "../../routes/AdminRoutes";
+import { Outlet } from "react-router-dom";
 //   import { Button, Layout, Menu, theme } from 'antd';
   
   const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const items=[
-        {
-          key: '1',
-          icon: <UserOutlined />,
-          label: 'Users',
-        },
-        {
-          key: '2',
-          icon: <VideoCameraOutlined />,
-          label: 'Dashboard',
-        },
-        {
-          key: '3',
-          icon: <UploadOutlined />,
-          label: 'nav 3',
-        },
-      ]
+     
     return (
         <div>
              <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+      <div
+          style={{
+            color: 'white',
+
+            height: '4rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <h1>My Uni</h1>
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-          items={items}
+          items={adminSidebarItems}
         />
       </Sider>
       <Layout>
@@ -64,6 +60,7 @@ const MainLayout = () => {
           }}
         >
           The Main Content should come here
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
