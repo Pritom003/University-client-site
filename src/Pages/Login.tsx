@@ -1,53 +1,65 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from "antd";
-import { useForm } from "react-hook-form";
-import { useLoginMutation } from "../redux/features/auth/authapi";
-import { useAppDispatch } from "../redux/hooks";
-import { setUser } from "../redux/features/auth/Auth.slice";
-import { verifyToken } from "../Utils/verifyToken";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { TUser } from "../Types";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Button, Row } from 'antd';
+import { FieldValues } from 'react-hook-form';
+
+import { useAppDispatch } from '../redux/hooks';
+
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useLoginMutation } from '../redux/features/auth/authapi';
+import { verifyToken } from '../Utils/verifyToken';
+import { TUser } from '../Types';
+import { setUser } from '../redux/features/auth/Auth.slice';
+import UniForm from '../Components/form/UniForm';
+import UniInput from '../Components/form/UniInput';
+
 
 const Login = () => {
-    const navigate = useNavigate();
-    const dispatch=useAppDispatch()
-    const {register, handleSubmit} = useForm();
-    const [login ,{data, error,}] = useLoginMutation();
-    console.log('data==>',data);
-    console.log('error==>',error);
-const onsubmit =async (data: any) => {
-    const toastId=toast.loading('loading...')
-    console.log(data);
-    try{
-    const userInfo={
-        id:data.id,
-        password:data.password
-    }
-  const res= await login(userInfo).unwrap() 
-  console.log(res , 'res');
-  const user=verifyToken(res.data.accessToken) as TUser
-  dispatch(setUser({user:user,token:res.data.accessToken}))
-  toast.success('Logged in successfully',{id:toastId ,duration:2000})
-  navigate(`/${user.role}/dashboard`)}
-catch(err){
-    console.log(err);
-    toast.error('Invalid Credentials',{id:toastId ,duration:2000})
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  // const { register, handleSubmit } = useForm({
+  //   defaultValues: {
+  //     userId: 'A-0002',
+  //     password: 'admin123',
+  //   },
+  // });
 
-}}
-    return (
-    <form onSubmit={handleSubmit(onsubmit)}>
-            <div>
-            <label htmlFor="id" >ID:</label>
-            <input type="text" id="id" {...register('id') } />
-        </div>
-        <div>
-            <label htmlFor="password">Password:</label>
-            <input type="text" id="password" {...register('password') }/>
-        </div>
-        <Button htmlType="submit">login</Button>
-    </form>
-    );
+  const defaultValues = {
+    userId: 'A-0000',
+    password: 'securep23',
+    
+  };
+
+  const [login] = useLoginMutation();
+
+  const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+    const toastId = toast.loading('Logging in');
+
+    try {
+      const userInfo = {
+        id: data.userId,
+        password: data.password,
+      };
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res.data.accessToken) as TUser;
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      toast.success('Logged in', { id: toastId, duration: 2000 });
+      navigate(`/${user.role}/dashboard`);
+    } catch (err) {
+      toast.error('Something went wrong', { id: toastId, duration: 2000 });
+    }
+  };
+
+  return (
+    <Row justify="center" align="middle" style={{ height: '100vh' }}>
+      <UniForm onSubmit={onSubmit} defaultValues={defaultValues}>
+        <UniInput type="text" name="userId" label="ID:" />
+        <UniInput type="text" name="password" label="Password" />
+        <Button htmlType="submit">Login</Button>
+      </UniForm>
+    </Row>
+  );
 };
 
 export default Login;
