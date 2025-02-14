@@ -11,6 +11,7 @@ import { persistStore, persistReducer ,FLUSH,
 const persistConfig = {
     key: 'auth',
     storage,
+    // whitelist: ['user', 'token'],
   }
   const persistAuthReducer=persistReducer(persistConfig,authReducer)
  export const store =configureStore({
@@ -30,3 +31,4 @@ export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
 export const persistor = persistStore(store)
+console.log("Initial Redux State:", store.getState());

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Form } from 'antd';
 import { ReactNode } from 'react';
 import {
   FieldValues,
@@ -9,6 +10,7 @@ import {
 
 type TFormConfig = {
   defaultValues?: Record<string, any>;
+  resolver?: any;
 };
 
 type TFormProps = {
@@ -16,18 +18,33 @@ type TFormProps = {
   children: ReactNode;
 } & TFormConfig;
 
-const UniForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
+const UniForm = ({
+  onSubmit,
+  children,
+  defaultValues,
+  resolver,
+}: TFormProps) => {
   const formConfig: TFormConfig = {};
 
   if (defaultValues) {
     formConfig['defaultValues'] = defaultValues;
   }
 
-  const methods = useForm(formConfig);
+  if (resolver) {
+    formConfig['resolver'] = resolver;
+  }
 
+  const methods = useForm(formConfig);
+const submit :SubmitHandler<FieldValues>=(data)=>{
+  onSubmit(data)
+  methods.reset()
+
+}
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <Form layout="vertical" onFinish={methods.handleSubmit(submit)}>
+        {children}
+      </Form>
     </FormProvider>
   );
 };

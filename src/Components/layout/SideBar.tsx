@@ -7,7 +7,7 @@ import { useAppSelector } from "../../redux/hooks";
 import {  useCurrentUser } from "../../redux/features/auth/Auth.slice";
 
 const Userrole={
-  Admin:'Admin',
+  Admin:'admin',
   Faculty:'Faculty',
   Student:'Student'}
 const SideBar = () => {
@@ -32,7 +32,12 @@ const SideBar = () => {
     }
     return (
     
-              <Sider trigger={null} collapsible >
+      <Sider
+      breakpoint="lg"
+      collapsedWidth="0"
+      style={{ height: '100vh', position: 'sticky', top: '0', left: '0' }}
+    >
+
       <div
           style={{
             color: 'white',

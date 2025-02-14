@@ -18,8 +18,7 @@ const handlelogout=()=>{
 }
      
     return (
-        
-             <Layout  style={{ height: '100vh' }}>
+      <Layout style={{ height: '100%' }}>
     <SideBar></SideBar>
       <Layout>
         <Header >
@@ -33,7 +32,7 @@ const handlelogout=()=>{
            
           }}
         >
-          The Main Content should come here
+         
           <Outlet />
         </Content>
       </Layout>

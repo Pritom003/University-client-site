@@ -1,4 +1,5 @@
-import CreateStudents from "../Pages/Admin/C'reateStudents";
+import CreateStudents from "../Pages/Admin/UserManagement/CreateStudents";
+
 
 export const StudentPaths = [
     {
