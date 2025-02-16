@@ -13,6 +13,11 @@ import CreateFaculty from '../Pages/Admin/UserManagement/CreateFaculty';
 import CreateStudents from '../Pages/Admin/UserManagement/CreateStudents';
 import StudentData from '../Pages/Admin/UserManagement/StudentsData';
 import StudentDetails from '../Pages/Admin/UserManagement/StudentDetails';
+import SemesterRegistration from '../Pages/Admin/courseManagement/semisterRegistrations';
+import RegisteredSemesters from '../Pages/Admin/courseManagement/RegistereedSemister';
+import CreateCourse from '../Pages/Admin/courseManagement/CreateCourse';
+import Courses from '../Pages/Admin/courseManagement/Couses';
+import OfferCourse from '../Pages/Admin/courseManagement/OfferCourses';
 
 
 
@@ -63,6 +68,7 @@ export const adminPaths = [
       
     ],
   },
+  
   {
     name: 'User Management',
     children: [
@@ -94,6 +100,42 @@ export const adminPaths = [
       
     ],
   },
+  {
+    name: 'Course Management',
+    children: [
+      {
+        name: 'Semester Registration',
+        path: 'semester-registration',
+        element: <SemesterRegistration />,
+      },
+      {
+        name: 'Registered Semesters',
+        path: 'registered-semesters',
+        element: <RegisteredSemesters/>,
+      },
+      {
+        name: 'Create Course',
+        path: 'create-course',
+        element: <CreateCourse />,
+      },
+      {
+        name: 'Courses',
+        path: 'courses',
+        element: <Courses />,
+      },
+      {
+        name: 'Offer Course',
+        path: 'offer-course',
+        element: <OfferCourse />,
+      },
+      // {
+      //   name: 'Offered Courses',
+      //   path: 'offered-courses',
+      //   element: <OfferedCourse />,
+      // },
+    ],
+  },
+
 ];
 
 
